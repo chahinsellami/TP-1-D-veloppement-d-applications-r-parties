@@ -4,11 +4,11 @@ Projet de développement d'applications réparties (DAR) - Activités 1-1 à 1-3
 
 ---
 
-## 📖 À propos
+## About
 
-Ce projet est une calculatrice client-serveur qui communique via TCP sur un port configurable. L'architecture permet plusieurs clients de se connecter en parallèle, chacun recevant des résultats en temps réel.
+This is a TCP client-server calculator that communicates over a configurable port. The architecture allows multiple clients to connect in parallel, each receiving results in real-time.
 
-## 📁 Structure
+## Structure
 ```
 .
 ├── src/
@@ -23,29 +23,29 @@ Ce projet est une calculatrice client-serveur qui communique via TCP sur un port
 ```
 
 
-## 📊 Résultats des activités
+## Activity Results
 
-### Activité 1-1
-Architecture de base avec boucle continue de requêtes.
+### Activity 1-1
+Basic architecture with continuous request loop.
 
 ![Serveur](screenshots/server-console.png)
 ![Client](screenshots/client-console.png)
 
-### Activité 1-2
-Support des entiers négatifs et gestion propre de la fermeture de session.
+### Activity 1-2
+Support for negative integers and clean session closure.
 
 ![Serveur](screenshots/{CBC48EEE-62A6-4FBD-8D99-438A2AED9684}.png)
 ![Client](screenshots/{143F357D-5BE3-4F4A-A6D8-E9307FCF7FC9}.png)
 
-### Activité 1-3
-Menu-driven avec 4 opérations (add, sub, mul, div) et connexion cross-machine.
+### Activity 1-3
+Menu-driven with 4 operations (add, sub, mul, div) and cross-machine connectivity.
 
 ![Serveur](screenshots/{D5E90705-3A1C-4075-BD8C-2E68694F7FD2}.png)
 ![Client](screenshots/{3E76036B-F0BC-459B-AD21-D3E9BC434E52}.png)
 
 ---
 
-## 🚀 Compilation
+## Compilation
 
 ```powershell
 javac -d out src\serverPackage\Server.java src\clientPackage\Client.java
@@ -53,9 +53,9 @@ javac -d out src\serverPackage\Server.java src\clientPackage\Client.java
 
 ---
 
-## 📡 Lancement
+## Launch
 
-### Serveur
+### Server
 ```powershell
 java -cp out serverPackage.Server [port]
 ```
@@ -75,7 +75,7 @@ java -cp out clientPackage.Client 192.168.1.100 5000
 
 ---
 
-## 💻 IDE & Execution
+## IDE & Execution
 
 **Pure Java (JDK 8+), zero external dependencies.**
 
