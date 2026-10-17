@@ -1,8 +1,8 @@
 package serverPackage;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -37,31 +37,23 @@ public class Server {
                 try (Socket clientSocket = serverSocket.accept()) {
                     System.out.println("Client connecté: " + clientSocket.getInetAddress() + ":" + clientSocket.getPort());
 
-                    DataInputStream input = new DataInputStream(clientSocket.getInputStream());
-                    DataOutputStream output = new DataOutputStream(clientSocket.getOutputStream());
+                    InputStream input = clientSocket.getInputStream();
+                    OutputStream output = clientSocket.getOutputStream();
 
                     while (true) {
                         try {
-                            byte operation = input.readByte();
-                            int x = input.readInt();
-
-                            int result;
-                            switch (operation) {
-                                case 1: result = x + 5; break;
-                                case 2: result = x - 5; break;
-                                case 3: result = x * 5; break;
-                                case 4:
-                                    if (x == 0) {
-                                        result = 0; // Division by zero → 0
-                                    } else {
-                                        result = 5 / x;
-                                    }
-                                    break;
-                                default: result = 0; // Unknown operation → 0
+                            int x = input.read();
+                            if (x == -1) {
+                                break;
+                            }
+                            if (x >= 128) {
+                                x -= 256;
                             }
 
-                            output.writeInt(result);
-                            System.out.println("Op " + operation + " (" + x + ") = " + result);
+                            int result = x + 5;
+                            output.write(result);
+                            output.flush();
+                            System.out.println(x + " + 5 = " + result);
                         } catch (IOException e) {
                             System.err.println("Erreur communication client.");
                             break;

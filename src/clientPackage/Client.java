@@ -1,8 +1,8 @@
 package clientPackage;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -16,46 +16,43 @@ public class Client {
         }
 
         Scanner scanner = new Scanner(System.in);
-        DataInputStream input = null;
-        DataOutputStream output = null;
+        InputStream input = null;
+        OutputStream output = null;
 
         try (Socket socket = new Socket(host, DEFAULT_PORT)) {
-            input = new DataInputStream(socket.getInputStream());
-            output = new DataOutputStream(socket.getOutputStream());
+            input = socket.getInputStream();
+            output = socket.getOutputStream();
 
-            System.out.println("=== Calculatrice TCP ===");
-            System.out.println("Choisissez une operation:");
-            System.out.println("1. Addition (+5)");
-            System.out.println("2. Soustraction (-5)");
-            System.out.println("3. Multiplication (*5)");
-            System.out.println("4. Division (/5)");
+            System.out.println("=== Calculatrice TCP - protocole 1 octet ===");
+            System.out.println("Le serveur ajoute 5 a chaque nombre.");
+            System.out.println("Entrez un nombre entre -128 et 122, ou 999 pour quitter.");
 
             while (true) {
-                System.out.print("Choix: ");
-                String choice = scanner.next();
-                byte op;
-                try {
-                    op = (byte) Integer.parseInt(choice);
-                } catch (NumberFormatException e) {
-                    System.out.println("Choix invalide. Entrez 1-4.");
-                    continue;
-                }
-
-                if (op < 1 || op > 4) {
-                    System.out.println("Choix invalide. Entrez 1-4.");
-                    continue;
-                }
-
                 System.out.print("x = ");
-                int x = scanner.nextInt();
+                if (!scanner.hasNextInt()) {
+                    System.out.println("Entrez un nombre entier.");
+                    scanner.next();
+                    continue;
+                }
 
-                output.writeByte(op);
-                output.writeInt(x);
+                int x = scanner.nextInt();
+                if (x == 999) {
+                    break;
+                }
+                if (x < -128 || x > 122) {
+                    System.out.println("Le nombre doit etre entre -128 et 122.");
+                    continue;
+                }
+
+                output.write(x);
+                output.flush();
 
                 try {
-                    int result = input.readInt();
-                    String opName = (op == 1) ? "+" : (op == 2) ? "-" : (op == 3) ? "*" : "/";
-                    System.out.println("Result: " + x + " " + opName + " 5 = " + result);
+                    int result = input.read();
+                    if (result >= 128) {
+                        result -= 256;
+                    }
+                    System.out.println("Result: " + x + " + 5 = " + result);
                 } catch (IOException e) {
                     System.err.println("Erreur communication.");
                     break;
