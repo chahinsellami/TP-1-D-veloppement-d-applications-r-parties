@@ -16,32 +16,9 @@ This is a TCP client-server calculator that communicates over a configurable por
 │   │   └── Client.java
 │   └── serverPackage/
 │       └── Server.java
-├── screenshots/
-│   └── *.png
 ├── README.md
 └── .gitignore
 ```
-
-
-## Activity Results
-
-### Activity 1-1
-Basic architecture with continuous request loop.
-
-![Serveur](screenshots/server-console.png)
-![Client](screenshots/client-console.png)
-
-### Activity 1-2
-Support for negative integers and clean session closure.
-
-![Serveur](screenshots/{CBC48EEE-62A6-4FBD-8D99-438A2AED9684}.png)
-![Client](screenshots/{143F357D-5BE3-4F4A-A6D8-E9307FCF7FC9}.png)
-
-### Activity 1-3
-Menu-driven with 4 operations (add, sub, mul, div) and cross-machine connectivity.
-
-![Serveur](screenshots/{D5E90705-3A1C-4075-BD8C-2E68694F7FD2}.png)
-![Client](screenshots/{3E76036B-F0BC-459B-AD21-D3E9BC434E52}.png)
 
 ---
 
@@ -99,4 +76,3 @@ I developed using VS Code (same workflow as IntelliJ):
 Try-with-resources (`try (Socket socket = ...)`) ensures clean, automatic file closure. The code runs identically in any IDE.
 
 ---
-
